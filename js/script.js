@@ -14,9 +14,20 @@ function loadData() {
     // load streetview
 
     // YOUR CODE GOES HERE!
-    var $streetVal = $("#street").val();
+    /*var $streetVal = $("#street").val();
     var $cityVal = $("#city").val();
-    $body.append('<img class="bgimg" src="http://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + $streetVal + ',' + $cityVal + '"/>');
+    $body.append('<img class="bgimg" src="http://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + $streetVal + ',' + $cityVal + '"/>');*/
+
+    var streetStr = $('#street').val();
+    var cityStr = $('#city').val();
+    var address = streetStr + ', ' + cityStr;
+
+    $greeting.text('So, you want to live at ' + address + '?');
+
+
+    // load streetview
+    var streetviewUrl = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
+    $body.append('<img class="bgimg" src="' + streetviewUrl + '">');
 
     return false;
 };
