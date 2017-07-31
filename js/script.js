@@ -33,9 +33,9 @@ function loadData() {
     // YOUR CODE GOES HERE!
     // get the url for search articles
     // from http://developer.nytimes.com/article_search_v2.json
-    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+    var urlNYT = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     // add the provided api-key after sign up in NYT search API
-    url += '?' + $.param({
+    urlNYT += '?' + $.param({
         'api-key': "69b15d49a8134c69975b1dd48c025afb",
         'q': cityStr
     });
@@ -52,8 +52,9 @@ function loadData() {
             throw err;
         });
     */
-    // get the articles 
-    $.getJSON(url, function(data) {
+    
+    // get NYT articles 
+    $.getJSON(urlNYT, function(data) {
         console.log(data); // the result from the get request
         var items = [];
         var articles = data.response.docs;
@@ -82,6 +83,8 @@ function loadData() {
         // getJSON error .. using JQuery .error()
         $nytHeaderElem.text("New York Times Articles Could Not Be Loaded");
     }); // end error()
+    
+   
     return false;
 };
 
