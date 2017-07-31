@@ -43,15 +43,15 @@ function loadData() {
     // Sample Code
     // from http://developer.nytimes.com/article_search_v2.json
     // Built by LucyBot. www.lucybot.com
-    $.ajax({
-        url: url,
-        method: 'GET',
-    }).done(function(result) {
-        //console.log(result); // the result from the get recuest
-    }).fail(function(err) {
-        throw err;
-    });
-
+    /*$.ajax({
+            url: url,
+            method: 'GET',
+        }).done(function(result) {
+            //console.log(result); // the result from the get recuest
+        }).fail(function(err) {
+            throw err;
+        });
+    */
     // get the articles 
     $.getJSON(url, function(data) {
         console.log(data); // the result from the get request
