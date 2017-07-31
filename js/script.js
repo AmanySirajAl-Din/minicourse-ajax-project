@@ -52,14 +52,14 @@ function loadData() {
             throw err;
         });
     */
-    
+
     // get NYT articles 
-    $.getJSON(urlNYT, function(data) {
-        console.log(data); // the result from the get request
+    $.getJSON(urlNYT, function (data) {
+        //console.log(data); // the result from the get request
         var items = [];
         var articles = data.response.docs;
 
-        $nytHeaderElem.text("New York Times Articles About " + cityStr)
+        $nytHeaderElem.text("New York Times Articles About " + cityStr);
 
         // put the data from the data object in the list items
         // according to the key and value in the data object
@@ -78,13 +78,33 @@ function loadData() {
         $(itemsStr).appendTo("#nytimes-articles"); // add the list items String to the <ul>
 
         // end getJSON() 
-    }).error(function() {
+    }).error(function () {
         // handle fail to get articles 
         // getJSON error .. using JQuery .error()
         $nytHeaderElem.text("New York Times Articles Could Not Be Loaded");
     }); // end error()
-    
-   
+
+    // get Wiki articles
+    var urlWiki = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" + cityStr + "&format=json&callback=wikiCallback";
+    $.ajax({
+        url: urlWiki,
+        dataType: 'jsonp',
+        // jsonp: "callback",
+        success: function (response) {
+            console.log(response);
+
+            var wikiArticles = response[1];
+            console.log(wikiArticles);
+
+            for (var i = 0; i < wikiArticles.length; i++) {
+                var articleStr = wikiArticles[i];
+                var url = "https://en.wikipedia.org/wiki/" + articleStr;
+                $wikiElem.append("<li><a href='" + url + "'>" +
+                    articleStr + "</a></li>")
+            };
+        }
+    });
+
     return false;
 };
 
