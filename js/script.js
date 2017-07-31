@@ -86,6 +86,15 @@ function loadData() {
 
     // get Wiki articles
     var urlWiki = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" + cityStr + "&format=json&callback=wikiCallback";
+    
+    // workaround for error handling with JSON P
+    // first create a Timeout function
+    // when timesout
+    // it will change the text of the wiki header to failier
+    var wikiRequestTimeout = setTimeout(function(){
+        $wikiElem.text("failed to get wikipedia resources");
+    }, 8000);
+    
     $.ajax({
         url: urlWiki,
         dataType: 'jsonp',
@@ -102,6 +111,10 @@ function loadData() {
                 $wikiElem.append("<li><a href='" + url + "'>" +
                     articleStr + "</a></li>")
             };
+            
+            // success to get wikipedia resources
+            // then clear the Timeout Fun
+            clearTimeout(wikiRequestTimeout);
         }
     });
 
