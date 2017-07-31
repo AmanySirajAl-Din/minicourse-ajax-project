@@ -36,21 +36,21 @@ function loadData() {
     var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     // add the provided api-key after sign up in NYT search API
     url += '?' + $.param({
-  	'api-key': "69b15d49a8134c69975b1dd48c025afb",
-    'q': cityStr
-	});
+        'api-key': "69b15d49a8134c69975b1dd48c025afb",
+        'q': cityStr
+    });
 
     // Sample Code
     // from http://developer.nytimes.com/article_search_v2.json
     // Built by LucyBot. www.lucybot.com
-	$.ajax({
-	    url: url,
-	    method: 'GET',
-	}).done(function(result) {
-	    //console.log(result); // the result from the get recuest
-	}).fail(function(err) {
-	    throw err; 
-	});
+    $.ajax({
+        url: url,
+        method: 'GET',
+    }).done(function(result) {
+        //console.log(result); // the result from the get recuest
+    }).fail(function(err) {
+        throw err;
+    });
 
     // get the articles 
     $.getJSON(url, function(data) {
@@ -64,9 +64,9 @@ function loadData() {
         // according to the key and value in the data object
         for (var i = 0; i < articles.length; i++) {
             var item = "";
-            item = "<li class='article'>";  
+            item = "<li class='article'>";
             item += "<a href='" + articles[i].web_url + "'>";
-            item += articles[i].headline.main; 
+            item += articles[i].headline.main;
             item += articles[i].pub_date + "</a>";
             item += "<p>" + articles[i].snippet + "</p>"
             item += "</li>"
@@ -75,9 +75,13 @@ function loadData() {
 
         var itemsStr = items.join(""); // convert the items array to string
         $(itemsStr).appendTo("#nytimes-articles"); // add the list items String to the <ul>
-      
-    }) // end getJSON
-    
+
+        // end getJSON() 
+    }).error(function() {
+        // handle fail to get articles 
+        // getJSON error .. using JQuery .error()
+        $nytHeaderElem.text("New York Times Articles Could Not Be Loaded");
+    }); // end error()
     return false;
 };
 
